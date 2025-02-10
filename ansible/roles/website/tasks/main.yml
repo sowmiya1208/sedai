@@ -1,0 +1,16 @@
+---
+- name: Create index.html for test1
+  template:
+    src: "test1_index.html.j2"
+    dest: "/var/www/test1/index.html"
+    owner: nginx
+    group: nginx
+    mode: '0644'
+
+- name: Create index.html for test2
+  template:
+    src: "test2_index.html.j2"
+    dest: "/var/www/test2/index.html"
+    owner: nginx
+    group: nginx
+    mode: '0644'

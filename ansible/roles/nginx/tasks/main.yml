@@ -1,0 +1,41 @@
+---
+- name: Install Nginx
+  yum:
+    name: nginx
+    state: present
+
+- name: Start and enable Nginx service
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Configure virtual host for test1.example.com
+  template:
+    src: "test1.conf.j2"
+    dest: "/etc/nginx/conf.d/test1.example.com.conf"
+  notify:
+    - reload nginx
+
+- name: Configure virtual host for test2.example.com
+  template:
+    src: "test2.conf.j2"
+    dest: "/etc/nginx/conf.d/test2.example.com.conf"
+  notify:
+    - reload nginx
+
+- name: Create directory for test1 website
+  file:
+    path: "/var/www/test1"
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: '0755'
+
+- name: Create directory for test2 website
+  file:
+    path: "/var/www/test2"
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: '0755'
