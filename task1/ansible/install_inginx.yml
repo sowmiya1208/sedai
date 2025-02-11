@@ -1,0 +1,49 @@
+---
+- name: Install and configure Nginx with a custom webpage
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Update package cache
+      yum:
+        update_cache: yes
+
+    - name: Install Nginx
+      yum:
+        name: nginx
+        state: present
+
+    - name: Get the instance's IP address
+      shell: hostname -I | awk '{print $1}'
+      register: server_ip
+
+    - name: create index.html
+      file:
+        path: /var/www/html
+        state: directory
+        mode: '0755'
+
+    - name: Configure Nginx index page
+      template:
+        src: index.html.j2
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Ensure Nginx is serving the correct directory
+      lineinfile:
+        path: /etc/nginx/nginx.conf
+        regexp: '^\s*root\s+'
+        line: 'root /var/www/html;'
+        backup: yes
+
+    - name: Remove default nginx index.html (if it exists)
+      file:
+        path: /usr/share/nginx/html/index.html
+        state: absent
+
+    - name: Ensure Nginx is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
