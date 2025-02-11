@@ -23,7 +23,10 @@ A Virtual Private Cloud (VPC) was set up with two public subnets.
 An Application Load Balancer (ALB) and a Target Group (TG) were created.
 EC2 instances were associated with the ALB and attached to the Target Group for load balancing.
 
-4. Ansible playbook will run as part of userdata
+4. Ansible playbook
+   ----------------------------------------------------------------------
+   Ansible playbook will run as part of userdata
+   
    command: ansible-playbook -i localhost, -c local /home/ec2-user/install_nginx.yml
    
 Outcome
