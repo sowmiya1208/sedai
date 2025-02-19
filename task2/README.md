@@ -13,7 +13,7 @@ Navigate to the folder where you saved the script file (check_port.sh).
 open git bash from there.
 sh file and ips.txt file should be in the location where you are going to execute the command.
 run command: chmod +x check_port.sh 
-             ./check_port_9000.sh ips.txt
+             ./check_port.sh ips.txt
 
 
 Output
